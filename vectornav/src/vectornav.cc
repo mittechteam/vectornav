@@ -22,7 +22,6 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_components/register_node_macro.hpp>
-#include "std_srvs/srv/empty.hpp"
 
 // VectorNav libvncxx
 #include "vn/util.h"
@@ -487,7 +486,7 @@ Vectornav::~Vectornav()
     vs_->writeVelocityCompensationMeasurement(velocity, waitForReply);
   }
 
-  void handle_tare_request(
+  void Vectornav::handle_tare_request(
     const std::shared_ptr<rmw_request_id_t> request_header,
     const std::shared_ptr<std_srvs::srv::Empty::Request> request,
     std::shared_ptr<std_srvs::srv::Empty::Response> response) {

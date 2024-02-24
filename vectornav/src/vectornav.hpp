@@ -18,6 +18,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include "rclcpp_action/rclcpp_action.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "std_srvs/srv/empty.hpp"
 #include <vectornav_msgs/action/mag_cal.hpp>
 #include <vectornav_msgs/msg/attitude_group.hpp>
 #include <vectornav_msgs/msg/common_group.hpp>
@@ -46,6 +47,10 @@ namespace vectornav {
     bool connect(const std::string port, const int baud);
     bool configure_sensor();
     void vel_aiding_cb(const geometry_msgs::msg::Twist::SharedPtr msg);
+    void handle_tare_request(
+      const std::shared_ptr<rmw_request_id_t> request_header,
+      const std::shared_ptr<std_srvs::srv::Empty::Request> request,
+      const std::shared_ptr<std_srvs::srv::Empty::Response> response);
     rclcpp::Time getTimeStamp(vn::sensors::CompositeData & data);
     // rclcpp_action::GoalResponse handle_cal_goal(
     //   const rclcpp_action::GoalUUID & uuid,
@@ -129,6 +134,9 @@ namespace vectornav {
 
     /// Action servers for calibration
     rclcpp_action::Server<vectornav_msgs::action::MagCal>::SharedPtr server_mag_cal_;
+
+    // Service for tare
+    rclcpp::Service<std_srvs::srv::Empty>::SharedPtr service_tare_;
 
     /// ROS header time stamp adjustments
     double averageTimeDifference_{0};
