@@ -171,7 +171,7 @@ Vectornav::Vectornav(const rclcpp::NodeOptions &options) : Node("vectornav", opt
     // );
 
     // Tare service initialization
-    service_tare_ = create_service<std_srvs::srv::Empty>(
+    service_tare_ = this->create_service<std_srvs::srv::Empty>(
       "vectornav/tare", 
       std::bind(&Vectornav::handle_tare_request, this, _1, _2, _3));
 
